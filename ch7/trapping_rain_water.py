@@ -9,25 +9,22 @@ import bisect
 from typing import *
 
 def trap(height: List[int]) -> int:
-    # 예외 처리
-    # LeetCode test case 중 empty input이 있음.
-    if not height:
-        return 0
-
-    left, right = 0, len(height)-1
-    left_max, right_max = height[left], height[right]
-
+    stack = []
     volume = 0
-    # max height를 찾을 때까지 반복해서 투 포인터를 이동
-    while left != right:
-        if left_max <= right_max:
-            volume += left_max - height[left]
-            left += 1
-            left_max = max(height[left], left_max)
-        else:
-            volume += right_max - height[right]
-            right -= 1
-            right_max = max(height[right], right_max)
+
+    for i in range(len(height)):
+        # 변곡점을 만나는 경우
+        while stack and height[i] > height[stack[-1]]:
+            top = stack.pop()
+
+            if not stack:
+                break
+
+            distance = i - stack[-1] - 1
+            water = min(height[i], height[stack[-1]]) - height[top]
+            volume += distance * water
+
+        stack.append(i)
 
     return volume
 
@@ -39,5 +36,5 @@ if __name__ == "__main__":
             try:
                 height = list(map(int, height))
             except ValueError as e:
-                height = None
+                height = []
             print(trap(height))
