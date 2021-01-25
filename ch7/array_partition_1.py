@@ -9,15 +9,7 @@ import bisect
 from typing import *
 
 def arrayPairSum(nums: List[int]) -> int:
-    sum = 0
-    nums.sort()
-
-    for i, n in enumerate(nums):
-        # 짝수 번째 값의 합 계산
-        if i%2 == 0:
-            sum += n
-
-    return sum
+    return sum(sorted(nums)[::2]) # 한 줄로 pythonic 하게 풀이
 
 if __name__ == "__main__":
     with open("../input/array_partition_1.txt", "r") as f:
