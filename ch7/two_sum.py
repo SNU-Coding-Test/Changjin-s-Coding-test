@@ -9,10 +9,13 @@ import bisect
 from typing import *
 
 def twoSum(nums: List[int], target: int) -> List[int]:
-    for i in range(len(nums)-1):
-        for j in range(i+1, len(nums)):
-            if nums[i] + nums[j] == target:
-                return [i, j]
+    nums_map = {}
+    for i, num in enumerate(nums):
+        # 키와 값을 바꿔 딕셔너리에 저장하고, 타겟에서 첫번째 수를 뺀 결과를 key로 조회
+        if target-num in nums_map:
+            # 키가 존재하면 바로 return
+            return [nums_map[target-num], i]
+        nums_map[num] = i
 
 
 
