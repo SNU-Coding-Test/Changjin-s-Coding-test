@@ -11,9 +11,13 @@ from typing import *
 def maxProfit(prices: List[int]) -> int:
     profit = 0
     min_price = sys.maxsize
+
     for price in prices:
-        min_price = min(price, min_price)
-        profit = max(price-min_price, profit)
+        if price < min_price:
+            min_price = price
+        if price-min_price > profit:
+            profit = price-min_price
+
     return profit
 
 
