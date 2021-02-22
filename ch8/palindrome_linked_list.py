@@ -14,23 +14,22 @@ class ListNode:
         self.next = next
 
 def isPalindrome(head: ListNode) -> bool:
-    pal = collections.deque()
+    rev = None
+    slow = fast = head # fast, slow runner initialization
 
-    if not head:
-        return True
+    # make a reversed linked list
+    while fast and fast.next:
+        fast = fast.next.next
+        rev, rev.next, slow = slow, rev, slow.next
 
-    node = head
-    # list transformation
-    while node is not None:
-        pal.append(node.val)
-        node = node.next
+    if fast:
+        slow = slow.next
 
-    # palindrome discrimination
-    while len(pal)>1:
-        if pal.popleft() != pal.pop():
-            return False
+    # palindrome check
+    while rev and slow.val == rev.val:
+        slow, rev = slow.next, rev.next
 
-    return True
+    return not rev
 
 if __name__ == "__main__":
     with open("../input/palindrome_linked_list.txt", "r") as f:
