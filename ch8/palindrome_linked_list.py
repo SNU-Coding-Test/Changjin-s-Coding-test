@@ -14,7 +14,7 @@ class ListNode:
         self.next = next
 
 def isPalindrome(head: ListNode) -> bool:
-    pal = []
+    pal = collections.deque()
 
     if not head:
         return True
@@ -27,7 +27,7 @@ def isPalindrome(head: ListNode) -> bool:
 
     # palindrome discrimination
     while len(pal)>1:
-        if pal.pop(0) != pal.pop():
+        if pal.popleft() != pal.pop():
             return False
 
     return True
