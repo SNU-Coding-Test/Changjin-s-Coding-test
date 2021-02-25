@@ -14,13 +14,12 @@ class ListNode:
         self.next = next
 
 def reverseList(head: ListNode) -> ListNode:
-    node, prev = head, None
-
-    while node:
+    def reverse(node: ListNode, prev: ListNode=None):
+        if not node:
+            return prev
         next, node.next = node.next, prev
-        prev, node = node, next
-
-    return prev
+        return reverse(next, node)
+    return reverse(head)
 
 if __name__ == "__main__":
     with open("../input/reverse_linked_list.txt", "r") as f:
