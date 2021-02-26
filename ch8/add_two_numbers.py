@@ -13,24 +13,33 @@ class ListNode:
         self.val = val
         self.next = next
 
-def addTwoNumbers(l1: ListNode, l2: ListNode) -> ListNode:
-    x1, x2 = [], []
-    while l1:
-        x1.append(l1.val)
-        l1 = l1.next
-    while l2:
-        x2.append(l2.val)
-        l2 = l2.next
-    sum = 0
-    for i, num in enumerate(x1):
-        sum += num * (10 ** i)
-    for i, num in enumerate(x2):
-        sum += num * (10 ** i)
+def reverseList(node: ListNode) -> ListNode:
     prev = None
-    for c in str(sum):
-        result = ListNode(c)
-        result.next, prev = prev, result
-    return result
+    while node:
+        next, node.next = node.next, prev
+        prev, node = node, next
+    return prev
+
+def toList(node: ListNode) -> List:
+    list = []
+    while node:
+        list.append(node.val)
+        node = node.next
+    return list
+
+def toReverseLinkedList(result: str) -> ListNode:
+    prev = None
+    for r in result:
+        node = ListNode(r)
+        node.next, prev = prev, node
+    return node
+
+def addTwoNumbers(l1: ListNode, l2: ListNode) -> ListNode:
+    x = int(''.join(str(c) for c in toList(reverseList(l1))))
+    y = int(''.join(str(c) for c in toList(reverseList(l2))))
+    sum = x+y
+
+    return toReverseLinkedList(str(sum))
 
 if __name__ == "__main__":
     with open("../input/add_two_numbers.txt", "r") as f:
